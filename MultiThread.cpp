@@ -1,12 +1,35 @@
 // MultiThread.cpp : Defines the entry point for the console application.
 //
 
+#include "stdafx.h"
+#include <chrono>         // std::chrono::seconds
 #include <thread>
 #include <iostream>
 #include <vector>
 using namespace std;
 
-int main() {
+void pause_thread(int n)
+{
+	//std::this_thread::sleep_for(std::chrono::seconds(n));
+	std::cout << "pause of " << n << " seconds ended\n";
+}
+
+void multiThreadTestOne() {
+	std::cout << "Spawning 3 threads...\n";
+	std::thread t1(pause_thread, 1);
+	std::thread t2(pause_thread, 2);
+	std::thread t3(pause_thread, 3);
+	//std::thread t1(pause_thread, 1);
+	//std::thread t2(pause_thread, 1);
+	//std::thread t3(pause_thread, 1);
+	std::cout << "Done spawning threads. Now waiting for them to join:\n";
+	t1.join();
+	t2.join();
+	t3.join();
+	std::cout << "All threads joined!\n";
+}
+
+void multiThreadTestTwo() {
 	vector<thread> threads;
 	for (int i = 0; i < 5; ++i) {
 		threads.push_back(thread([]() {
@@ -16,34 +39,12 @@ int main() {
 	for (auto& thread : threads) {
 		thread.join();
 	}
-	return 0;
-}
-
-#include "stdafx.h"
-#include <iostream>       // std::cout
-#include <thread>         // std::thread, std::this_thread::sleep_for
-#include <chrono>         // std::chrono::seconds
-
-void pause_thread(int n)
-{
-	//std::this_thread::sleep_for(std::chrono::seconds(n));
-	std::cout << "pause of " << n << " seconds ended\n";
 }
 
 int main()
 {
-	std::cout << "Spawning 3 threads...\n";
-	std::thread t1(pause_thread, 1);
-	std::thread t2(pause_thread, 2);
-	std::thread t3(pause_thread, 3);
-	/*std::thread t1(pause_thread, 1);
-	std::thread t2(pause_thread, 1);
-	std::thread t3(pause_thread, 1);*/
-	std::cout << "Done spawning threads. Now waiting for them to join:\n";
-	t1.join();
-	t2.join();
-	t3.join();
-	std::cout << "All threads joined!\n";
+	multiThreadTestOne();
+	multiThreadTestTwo();
 
 	return 0;
 }
