@@ -2,7 +2,7 @@
 //
 
 #include "stdafx.h"
-#include <chrono>         // std::chrono::seconds
+#include <chrono>         // chrono::seconds
 #include <thread>
 #include <iostream>
 #include <vector>
@@ -10,23 +10,23 @@ using namespace std;
 
 void pause_thread(int n)
 {
-	//std::this_thread::sleep_for(std::chrono::seconds(n));
-	std::cout << "pause of " << n << " seconds ended\n";
+	//this_thread::sleep_for(chrono::seconds(n));
+	cout << "pause of " << n << " seconds ended\n";
 }
 
 void multiThreadTestOne() {
-	std::cout << "Spawning 3 threads...\n";
-	std::thread t1(pause_thread, 1);
-	std::thread t2(pause_thread, 2);
-	std::thread t3(pause_thread, 3);
-	//std::thread t1(pause_thread, 1);
-	//std::thread t2(pause_thread, 1);
-	//std::thread t3(pause_thread, 1);
-	std::cout << "Done spawning threads. Now waiting for them to join:\n";
+	cout << "Spawning 3 threads...\n";
+	thread t1(pause_thread, 1);
+	thread t2(pause_thread, 2);
+	thread t3(pause_thread, 3);
+	//thread t1(pause_thread, 1);
+	//thread t2(pause_thread, 1);
+	//thread t3(pause_thread, 1);
+	cout << "Done spawning threads. Now waiting for them to join:\n";
 	t1.join();
 	t2.join();
 	t3.join();
-	std::cout << "All threads joined!\n";
+	cout << "All threads joined!\n";
 }
 
 void multiThreadTestTwo() {
@@ -43,6 +43,9 @@ void multiThreadTestTwo() {
 
 int main()
 {
+	cout << "yo" << endl;
+	this_thread::sleep_for(chrono::seconds(5));
+	cout << "s'up" << endl;
 	multiThreadTestOne();
 	multiThreadTestTwo();
 
